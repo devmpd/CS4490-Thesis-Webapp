@@ -1,0 +1,48 @@
+<div id="main">
+  <div id="dropdowns">
+    <mat-form-field>
+      <mat-label>Building</mat-label>
+      <mat-select [(value)]="selectedBuilding" (selectionChange)="selectBuilding($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building">{{building.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sensor</mat-label>
+      <mat-select [(value)]="selectedSensor" (selectionChange)="selectSensor($event)">
+        <mat-option *ngFor="let sensor of sensors" [value]="sensor">{{sensor.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-sidenav-container class="sensor-data-sidebar">
+
+    <mat-sidenav #sidenav mode="side" [(opened)]="sidebarOpened">
+      <div *ngIf="!selectedSensor">
+        <h3 style="text-align:center;">Welcome</h3>
+        <p style="text-align:center;">To begin, please select a building and a sensor.</p>
+      </div>
+      <div *ngIf="selectedSensor">
+        <h3 style="text-align:center">{{selectedSensor.name}}</h3>
+        <div *ngIf="sensorData">
+          <div *ngFor="let item of sensorData.sensor1.sensorMeta | keyvalue">
+            {{item.key}}: {{item.value}}
+          </div>
+        </div>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div *ngIf="sensorData">
+        <h1 style="text-align:center">Sensor Graph</h1>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [constructorType]="'stockChart'"
+          [options]="chartOptions"
+          [update]="true"
+          style="width:100%; height:350px; display:block;"
+          ></highcharts-chart>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>
