@@ -25,7 +25,9 @@
         <h3 style="text-align:center">{{selectedSensor.name}}</h3>
         <div *ngIf="sensorData">
           <div *ngFor="let item of sensorData.sensor1.sensorMeta | keyvalue">
-            {{item.key}}: {{item.value}}
+            <div *ngIf="item.value">
+              {{item.key}}: {{item.value}}
+            </div>
           </div>
         </div>
       </div>
@@ -39,7 +41,7 @@
           [constructorType]="'stockChart'"
           [options]="chartOptions"
           [update]="true"
-          style="width:100%; height:350px; display:block;"
+          style="width:100%; height:500px; display:block;"
           ></highcharts-chart>
       </div>
     </mat-sidenav-content>
