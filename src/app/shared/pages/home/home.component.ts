@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   private sidebarOpened =true;
   private Highcharts: typeof Highcharts = Highcharts;
   private chartOptions;
+  private seriesData;
 
   constructor(private sensorService: SensorService) { }
 
@@ -46,14 +47,11 @@ export class HomeComponent implements OnInit {
       subtitle: {text: "test 2" },
       series: [{
         type: 'line',
-        data: [11, 2, 3],
+        data: [[1293580800000, 46.47],
+        [1293667200000, 46.24]]
       }]
     };
   }
-
-/*  ngAfterViewInit(): void{
-    this.chart = new StockChart(this.chartOptions);
-  }*/
 
 /*  loadChart(data): any{
     this.chartOptions = {
@@ -81,17 +79,14 @@ export class HomeComponent implements OnInit {
 
   selectSensor($event){
       this.sensorService.getAllSensorData($event.value.id).subscribe((data) =>{
-        console.log(this.selectedSensor);
-        console.log(data);
-        this.sensorData = {"sensor1": data};
-        console.log("Sensor");
-        console.log(this.sensorData);
+        this.sensorData = {sensor1: data};
+        this.seriesData = {sensor1: JSON.parse(data.data)};
         this.sidebarOpened = true;
         this.updateChart();
-      })
+      });
   }
 
   updateChart(): void {
-    this.chartOptions.series[0].data = [10,14,2,3,4,1,5,6,1,18];
+    this.chartOptions.series[0].data = this.seriesData.sensor1;
   }
 }

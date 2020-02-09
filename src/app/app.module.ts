@@ -7,16 +7,13 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatIconModule, MatListModule, MatButtonModule } from  '@angular/material';
+import { MatToolbarModule, MatIconModule, MatListModule, MatButtonModule } from '@angular/material';
 import { HomeComponent } from './shared/pages/home/home.component';
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatSelectModule } from "@angular/material/select";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { HighchartsChartModule } from "highcharts-angular";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { HighchartsChartModule } from 'highcharts-angular';
 
-export function highchartsModules(){
-  return [stock, more];
-}
 
 @NgModule({
   declarations: [
