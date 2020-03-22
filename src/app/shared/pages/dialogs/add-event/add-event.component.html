@@ -1,1 +1,24 @@
-<p>add-event works!</p>
+<h2 mat-dialog-title>Add Event</h2>
+
+<mat-dialog-content>
+  <div id="dropdowns">
+    <mat-form-field>
+      <mat-label>Building</mat-label>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sensor</mat-label>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [disabled]="disabled">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                               [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Add</button>
+</mat-dialog-actions>

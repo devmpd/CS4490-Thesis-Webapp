@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Add Metadata</h2>
+
+<mat-dialog-content>
+  <div class="form-container">
+    <mat-form-field class="meta-input">
+      <mat-label>Metadata Title</mat-label>
+      <input matInput placeholder="Title" [(ngModel)]="metaTitle">
+    </mat-form-field>
+    <mat-form-field class="meta-input">
+      <mat-label>Metadata Description</mat-label>
+      <textarea matInput placeholder="Description" [(ngModel)]="metaDescription"></textarea>
+    </mat-form-field>
+    <div *ngIf="errorMessage">
+      <span class="error-message">{{errorMessage}}</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Add</button>
+</mat-dialog-actions>

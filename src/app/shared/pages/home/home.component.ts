@@ -6,6 +6,7 @@ import StockModule from 'highcharts/modules/stock';
 import {MatDialog, MatDialogModule, MatDialogConfig} from '@angular/material';
 import {AddSensorsComponent} from '../dialogs/add-sensors/add-sensors.component';
 import {AddEventComponent} from '../dialogs/add-event/add-event.component';
+import {AddMetadataComponent} from '../dialogs/add-metadata/add-metadata.component';
 
 StockModule(Highcharts);
 
@@ -24,9 +25,9 @@ Highcharts.setOptions({
 })
 
 @NgModule({
-  declarations: [AddSensorsComponent],
+  declarations: [AddSensorsComponent, AddEventComponent, AddMetadataComponent],
   imports: [MatDialogModule],
-  entryComponents: [AddSensorsComponent]
+  entryComponents: [AddSensorsComponent, AddEventComponent, AddMetadataComponent]
 })
 export class HomeComponent implements OnInit {
   private buildings: [];
@@ -105,6 +106,21 @@ export class HomeComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(AddEventComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        dialogRef.close();
+        if (data) {
+          this.addEvent(data);
+        }
+      }
+    );
+  }
+
+  addMetadataDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(AddMetadataComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {

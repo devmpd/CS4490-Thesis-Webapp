@@ -33,7 +33,7 @@ export class AddSensorsComponent implements OnInit {
   }
 
   selectBuilding($event) {
-    this.sensorService.getSensorsByBuilding($event.value.id).subscribe((data) =>{
+    this.sensorService.getSensorsByBuilding($event.value.id).subscribe((data) => {
       this.sensorData = null;
       this.sensors = data;
     });

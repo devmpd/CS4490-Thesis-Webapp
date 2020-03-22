@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatInputModule, MatDatepickerToggle } from '@angular/material';
 import { HomeComponent } from './shared/pages/home/home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -16,6 +16,9 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { AddSensorsComponent } from './shared/pages/dialogs/add-sensors/add-sensors.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddEventComponent } from './shared/pages/dialogs/add-event/add-event.component';
+import { AddMetadataComponent } from './shared/pages/dialogs/add-metadata/add-metadata.component';
+import { FormsModule } from '@angular/forms';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'ngx-mat-datetime-picker';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { AddEventComponent } from './shared/pages/dialogs/add-event/add-event.co
     FooterComponent,
     HomeComponent,
     AddSensorsComponent,
-    AddEventComponent
+    AddEventComponent,
+    AddMetadataComponent
   ],
   imports: [
     BrowserModule,
@@ -33,14 +37,18 @@ import { AddEventComponent } from './shared/pages/dialogs/add-event/add-event.co
     MatToolbarModule,
     HttpClientModule,
     MatFormFieldModule,
+    MatInputModule,
     MatSelectModule,
     MatSidenavModule,
     MatButtonModule,
     HighchartsChartModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    NgxMatDatetimePickerModule,
+    MatDatepickerToggle
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddSensorsComponent]
+  entryComponents: [AddSensorsComponent, AddEventComponent, AddMetadataComponent]
 })
 export class AppModule { }
