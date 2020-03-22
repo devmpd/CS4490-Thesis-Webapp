@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Add Sensor</h2>
+
+<mat-dialog-content>
+  <div id="dropdowns">
+    <mat-form-field>
+      <mat-label>Building</mat-label>
+      <mat-select [(value)]="selectedBuilding" (selectionChange)="selectBuilding($event)">
+        <mat-option *ngFor="let building of buildings" [value]="building">{{building.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sensor</mat-label>
+      <mat-select [(value)]="selectedSensor" (selectionChange)="selectSensor($event)">
+        <mat-option *ngFor="let sensor of sensors" [value]="sensor">{{sensor.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Add</button>
+</mat-dialog-actions>

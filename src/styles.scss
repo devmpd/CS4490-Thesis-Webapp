@@ -27,3 +27,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 #main{
   height:100%;
 }
+
+.graph-functions{
+  text-align: center;
+
+  .mat-raised-button{
+    margin: 0 10px 10px 10px;
+  }
+}
+
+.mat-dialog-actions{
+  float: right;
+
+  .mat-raised-button{
+    margin: 0 10px 0 10px;
+  }
+}
