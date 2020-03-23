@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
+import {SensorService} from '../../../services/sensor.service';
 
 @Component({
   selector: 'app-add-metadata',
@@ -7,9 +8,9 @@ import {MatDialogRef} from '@angular/material';
   styleUrls: ['./add-metadata.component.scss']
 })
 export class AddMetadataComponent implements OnInit {
-  private metaTitle = '';
-  private metaDescription = '';
-  private errorMessage = '';
+  public metaTitle = '';
+  public metaDescription = '';
+  public errorMessage = '';
 
 
   constructor(private dialogRef: MatDialogRef<AddMetadataComponent>) { }
@@ -25,7 +26,8 @@ export class AddMetadataComponent implements OnInit {
     } else if (this.metaDescription === '') {
       this.errorMessage = 'Description must not be blank.';
     } else {
-      this.dialogRef.close(null);
+      const data = {metaTitle: this.metaTitle, metaDescription: this.metaDescription};
+      this.dialogRef.close(data);
     }
   }
 

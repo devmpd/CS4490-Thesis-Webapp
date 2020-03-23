@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialogRef, ThemePalette} from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-event',
@@ -8,18 +9,11 @@ import {MatDialogRef, ThemePalette} from '@angular/material';
 })
 export class AddEventComponent implements OnInit {
 
-  public date: Date;
-  public disabled = false;
-  public showSpinners = true;
-  public showSeconds = false;
-  public touchUi = false;
-  public enableMeridian = false;
-  public minDate: Date;
-  public maxDate: Date;
-  public stepHour = 1;
-  public stepMinute = 1;
-  public stepSecond = 1;
-  public color: ThemePalette = 'primary';
+  public eventTitle = '';
+  public eventDescription = '';
+  public startDate: Date;
+  public endDate: Date;
+
 
   constructor(private dialogRef: MatDialogRef<AddEventComponent>) { }
 

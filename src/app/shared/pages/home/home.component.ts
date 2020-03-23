@@ -3,10 +3,11 @@ import { SensorService } from '../../services/sensor.service';
 
 import * as Highcharts from 'highcharts';
 import StockModule from 'highcharts/modules/stock';
-import {MatDialog, MatDialogModule, MatDialogConfig} from '@angular/material';
+import { MatDialog, MatDialogModule, MatDialogConfig } from '@angular/material/dialog';
 import {AddSensorsComponent} from '../dialogs/add-sensors/add-sensors.component';
 import {AddEventComponent} from '../dialogs/add-event/add-event.component';
 import {AddMetadataComponent} from '../dialogs/add-metadata/add-metadata.component';
+import { AdditionalMetadata } from '../../model/additional-metadata';
 
 StockModule(Highcharts);
 
@@ -24,21 +25,22 @@ Highcharts.setOptions({
   styleUrls: ['./home.component.scss']
 })
 
-@NgModule({
+/*@NgModule({
   declarations: [AddSensorsComponent, AddEventComponent, AddMetadataComponent],
   imports: [MatDialogModule],
   entryComponents: [AddSensorsComponent, AddEventComponent, AddMetadataComponent]
-})
+})*/
 export class HomeComponent implements OnInit {
-  private buildings: [];
-  private sensors: [];
-  private sensorData;
-  private selectedBuilding;
-  private selectedSensor;
-  private sidebarOpened = true;
-  private Highcharts: typeof Highcharts = Highcharts;
-  private chartOptions;
-  private seriesData;
+  public buildings: [];
+  public sensors: [];
+  public sensorData;
+  public additionalMetadata: AdditionalMetadata[] = [];
+  public selectedBuilding;
+  public selectedSensor;
+  public sidebarOpened = true;
+  public Highcharts: typeof Highcharts = Highcharts;
+  public chartOptions;
+  public seriesData;
   updateFromInput = true;
 
   constructor(private sensorService: SensorService, public dialog: MatDialog) { }
@@ -46,7 +48,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.sensorService.getBuildings().subscribe((data) => {
-      console.log(data);
       this.buildings = data;
     });
     this.chartOptions = {
@@ -126,7 +127,8 @@ export class HomeComponent implements OnInit {
       data => {
         dialogRef.close();
         if (data) {
-          this.addEvent(data);
+          this.saveMetadata(data);
+          //this.addEvent(data);
         }
       }
     );
@@ -136,15 +138,20 @@ export class HomeComponent implements OnInit {
     this.sensorService.getSensorsByBuilding($event.value.id).subscribe((data) => {
       this.seriesData = null;
       this.sensorData = null;
+      this.additionalMetadata = [];
       this.sensors = data;
     });
   }
 
   selectSensor($event) {
       this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
+        this.additionalMetadata = [];
         this.sensorData = {sensor1: data};
-        console.log(this.sensorData);
         this.seriesData = {sensor1: JSON.parse(data.data)};
+        for (const item of data.additionalMetadata) {
+          this.additionalMetadata.push(item);
+        }
+        console.log(this.additionalMetadata);
         this.updateChart();
       });
   }
@@ -168,5 +175,15 @@ export class HomeComponent implements OnInit {
     this.chartOptions.xAxis.plotBands[1] = {
 
     };
+  }
+  saveMetadata(data): void {
+    const addMetadata: AdditionalMetadata = {
+      title: data.metaTitle,
+      description: data.metaDescription,
+      sensorId: this.sensorData.sensor1.sensorMeta._id
+    };
+    this.sensorService.saveAdditionalMetadata(addMetadata).subscribe((response) => {
+      this.additionalMetadata.push(addMetadata);
+    });
   }
 }

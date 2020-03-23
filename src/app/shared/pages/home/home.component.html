@@ -31,7 +31,12 @@
           </div>
         </div>
         <h3 style="text-align:center;">Additional Metadata</h3>
-        <div class="graph-functions">
+        <div *ngIf="additionalMetadata">
+          <div *ngFor="let addedMetadata of additionalMetadata">
+            {{addedMetadata.title}}: {{addedMetadata.description}}
+          </div>
+        </div>
+        <div class="meta-functions">
           <button mat-raised-button color="primary" (click)="addMetadataDialog()">Add Metadata</button>
         </div>
       </div>

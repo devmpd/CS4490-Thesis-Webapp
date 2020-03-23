@@ -37,6 +37,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.meta-functions {
+  text-align: center;
+
+  .mat-raised-button{
+    margin-top: 20px;
+  }
+}
+
 .mat-dialog-actions{
   float: right;
 
@@ -45,7 +53,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.meta-input{
+.form-inputs{
   width: 100%;
 }
 

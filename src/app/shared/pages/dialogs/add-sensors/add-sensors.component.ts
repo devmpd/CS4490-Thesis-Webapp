@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {SensorService} from '../../../services/sensor.service';
 
 @Component({
@@ -9,17 +9,16 @@ import {SensorService} from '../../../services/sensor.service';
 })
 export class AddSensorsComponent implements OnInit {
   private data = {};
-  private buildings: [];
-  private sensors: [];
-  private sensorData;
-  private selectedBuilding;
-  private selectedSensor;
+  public buildings: [];
+  public sensors: [];
+  public sensorData;
+  public selectedBuilding;
+  public selectedSensor;
 
   constructor(private sensorService: SensorService, private dialogRef: MatDialogRef<AddSensorsComponent>) { }
 
   ngOnInit() {
     this.sensorService.getBuildings().subscribe((data) => {
-      console.log(data);
       this.buildings = data;
     });
   }
@@ -42,7 +41,6 @@ export class AddSensorsComponent implements OnInit {
   selectSensor($event) {
     this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
       this.sensorData = {sensor1: data};
-      console.log(this.sensorData);
     });
   }
 }

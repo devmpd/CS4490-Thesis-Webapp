@@ -1,21 +1,23 @@
 <h2 mat-dialog-title>Add Event</h2>
 
 <mat-dialog-content>
-  <div id="dropdowns">
-    <mat-form-field>
-      <mat-label>Building</mat-label>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Sensor</mat-label>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [disabled]="disabled">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-                               [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
-      </ngx-mat-datetime-picker>
-    </mat-form-field>
-  </div>
+  <mat-form-field class="form-inputs">
+    <mat-label>Event Title</mat-label>
+    <input matInput placeholder="Title" [(ngModel)]="eventTitle">
+  </mat-form-field>
+  <mat-form-field class="form-inputs">
+    <mat-label>Event Description</mat-label>
+    <textarea matInput placeholder="Description" [(ngModel)]="eventDescription"></textarea>
+  </mat-form-field>
+  <mat-form-field class="form-inputs">
+    <mat-label for="start">Start Date</mat-label>
+    <input id="start" matInput type="datetime-local">
+  </mat-form-field>
+  <mat-form-field class="form-inputs">
+    <mat-label for="end">End Date (optional)</mat-label>
+    <input id="end" matInput type="datetime-local">
+  </mat-form-field>
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
