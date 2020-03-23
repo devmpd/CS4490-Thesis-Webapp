@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Add Event</h2>
+<h2 mat-dialog-title style="text-align:center">Add Event</h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="add-event">
   <mat-form-field class="form-inputs">
     <mat-label>Event Title</mat-label>
     <input matInput placeholder="Title" [(ngModel)]="eventTitle">
@@ -11,12 +11,26 @@
   </mat-form-field>
   <mat-form-field class="form-inputs">
     <mat-label for="start">Start Date</mat-label>
-    <input id="start" matInput type="datetime-local">
+    <input id="start" matInput type="datetime-local" [(ngModel)]="startDate">
   </mat-form-field>
   <mat-form-field class="form-inputs">
     <mat-label for="end">End Date (optional)</mat-label>
-    <input id="end" matInput type="datetime-local">
+    <input id="end" matInput type="datetime-local" [(ngModel)]="endDate">
   </mat-form-field>
+  <div id="dropdowns">
+    <mat-form-field>
+      <mat-label>Building</mat-label>
+      <mat-select [(value)]="selectedBuilding">
+        <mat-option *ngFor="let building of buildings" [value]="building">{{building.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cluster (optional)</mat-label>
+      <mat-select [(value)]="selectedCluster">
+        <mat-option *ngFor="let cluster of clusters" [value]="cluster">{{cluster.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
 </mat-dialog-content>
 

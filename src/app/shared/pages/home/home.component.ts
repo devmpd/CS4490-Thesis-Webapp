@@ -106,6 +106,7 @@ export class HomeComponent implements OnInit {
   addEventDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
+    dialogConfig.data = { buildings: this.buildings };
     const dialogRef = this.dialog.open(AddEventComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -128,7 +129,6 @@ export class HomeComponent implements OnInit {
         dialogRef.close();
         if (data) {
           this.saveMetadata(data);
-          //this.addEvent(data);
         }
       }
     );

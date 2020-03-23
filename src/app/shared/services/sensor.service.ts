@@ -25,4 +25,8 @@ export class SensorService {
   public saveAdditionalMetadata(data: AdditionalMetadata): Observable<any> {
     return this.httpClient.post<AdditionalMetadata>(this.apiURL + 'sensors/sensor/addmetadata', data);
   }
+
+  public getClusters(): Observable<any> {
+    return this.httpClient.get(this.apiURL + 'buildings/clusters');
+  }
 }

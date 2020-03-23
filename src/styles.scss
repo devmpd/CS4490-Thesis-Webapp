@@ -60,3 +60,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .error-message{
   color: red;
 }
+
+.add-event{
+  text-align: center;
+  .form-inputs{
+    width: 80%;
+  }
+}
