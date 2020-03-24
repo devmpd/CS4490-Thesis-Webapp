@@ -57,11 +57,31 @@
           [(update)]="updateFromInput"
           style="width:100%; height:500px; display:block;"
           ></highcharts-chart>
-        <div *ngIf="eventData" style="text-align: center">
-          <h3>Event Data: {{eventData.title}}</h3>
-          <p>{{eventData.description}}</p>
-          <div *ngIf="eventData.cluster">
-            <p>Impacted cluster: {{eventData.cluster}}</p>
+        <div *ngIf="events" style="text-align: center">
+          <div fxLayout="row">
+            <div fxFlex="40%">
+              <h3>Impacting Events</h3>
+              <ul class="grid grid-pad" style="list-style-type:none; padding-inline-start: 0px;">
+                <a *ngFor="let event of events">
+                  <li (click)="selectEvent(event)">
+                    {{event.id}}
+                  </li>
+                </a>
+              </ul>
+            </div>
+            <div fxFlex="60%">
+              <div *ngIf="eventData">
+                <h3>Event Data: {{eventData.title}}</h3>
+                <p>{{eventData.description}}</p>
+                <div *ngIf="eventData.cluster">
+                  <p>Impacted cluster: {{eventData.cluster}}</p>
+                </div>
+                <p>Start: {{eventData.start}}</p>
+                <div *ngIf="eventData.end">
+                  <p>End: {{eventData.end}}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -23,6 +23,8 @@ import { AddMetadataComponent } from './shared/pages/dialogs/add-metadata/add-me
 import {FormsModule} from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatGridListModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -49,10 +49,17 @@ export class HomeComponent implements OnInit {
 
   plotBandEvents = {
     click(e) {
+      const startDate = new Date(this.options.from);
+      let endDate = null
+      if (this.options.to && this.options.to !== this.options.from) {
+        endDate = new Date(this.options.to);
+      }
       this.options.that.eventData = {
         title: this.options.id,
         description: this.options.description,
-        cluster: this.options.cluster
+        cluster: this.options.cluster,
+        start: startDate,
+        end: endDate
       };
     },
 
@@ -278,5 +285,20 @@ export class HomeComponent implements OnInit {
       that: this
     });
     this.updateFromInput = true;
+  }
+
+  selectEvent(data) {
+    const startDate = new Date(data.from);
+    let endDate = null
+    if (data.to && data.to !== data.from) {
+      endDate = new Date(data.to);
+    }
+    this.eventData = {
+      title: data.id,
+      description: data.description,
+      cluster: data.cluster,
+      start: startDate,
+      end: endDate
+    };
   }
 }

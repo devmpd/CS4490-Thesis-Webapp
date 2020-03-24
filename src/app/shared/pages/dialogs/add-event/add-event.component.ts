@@ -92,7 +92,7 @@ export class AddEventComponent implements OnInit {
 
   validateTimes(): boolean {
 
-    if (this.endDate === null) {
+    if (!this.endDate) {
       return true;
     } else {
       const start = new Date(this.startDate);
