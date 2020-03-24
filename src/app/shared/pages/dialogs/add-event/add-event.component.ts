@@ -65,7 +65,13 @@ export class AddEventComponent implements OnInit {
         buildingId: building,
         clusterId: cluster
       };
-      this.dialogRef.close(event);
+
+      const data = {
+        eventData: event,
+        cluster: this.selectedCluster.name
+      };
+
+      this.dialogRef.close(data);
     } else {
       this.errorMessage = 'Please enter all required information.';
     }

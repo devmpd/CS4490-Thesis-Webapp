@@ -42,9 +42,50 @@ export class HomeComponent implements OnInit {
   public Highcharts: typeof Highcharts = Highcharts;
   public chartOptions;
   public seriesData;
-  updateFromInput = true;
+  public updateFromInput = true;
+  public events = [];
+  public eventDetails = {};
+  public eventData;
 
-  constructor(private sensorService: SensorService, public dialog: MatDialog) { }
+  plotBandEvents = {
+    click(e) {
+      this.options.that.eventData = {
+        title: this.options.id,
+        description: this.options.description,
+        cluster: this.options.cluster
+      };
+    },
+
+    mouseover(e) {
+      document.body.style.cursor = 'pointer';
+      const chart = this.axis.chart;
+      const x = e.offsetX;
+      if (chart.customLabel) {
+        chart.customLabel.hide();
+      }
+      chart.customLabel = chart.renderer.label(this.id, x, 85, 'callout', chart.plotLeft, chart.plotTop, false)
+        .css({
+          color: 'white',
+        })
+        .attr({
+          padding: 5,
+          zIndex: 6,
+          stroke: 'black',
+          fill: 'rgba(0,0,0,0.6)',
+          r: 5,
+        }).add();
+    },
+    mouseout(e) {
+      document.body.style.cursor = 'auto';
+      const chart = this.axis.chart;
+      if (chart.customLabel) {
+        chart.customLabel.hide();
+      }
+    }
+  };
+
+  constructor(private sensorService: SensorService, public dialog: MatDialog) {
+  }
 
 
   ngOnInit() {
@@ -63,7 +104,7 @@ export class HomeComponent implements OnInit {
       rangeSelector: {
         selected: 2
       },
-      title: { text: 'Sensor Data'},
+      title: {text: 'Sensor Data'},
       series: [{
         showInLegend: true,
         type: 'line',
@@ -78,11 +119,14 @@ export class HomeComponent implements OnInit {
         title: {}
       },
       xAxis: {
-        plotBands: [{
-          color: 'rgba(255,0,0,0.5)',
-          from: 1561752000000,
-          to: 1561870800000
-        }]
+        /*        plotBands: [{
+                  id: 'test',
+                  color: 'rgba(255,0,0,0.5)',
+                  from: 1561752000000,
+                  to: 1561752000000,
+                  events: this.plotBandEvents
+                }]*/
+        plotBands: this.events
       }
     };
   }
@@ -107,7 +151,7 @@ export class HomeComponent implements OnInit {
   addEventDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { buildings: this.buildings };
+    dialogConfig.data = {buildings: this.buildings};
     const dialogRef = this.dialog.open(AddEventComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -145,15 +189,16 @@ export class HomeComponent implements OnInit {
   }
 
   selectSensor($event) {
-      this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
-        this.additionalMetadata = [];
-        this.sensorData = {sensor1: data};
-        this.seriesData = {sensor1: JSON.parse(data.data)};
-        for (const item of data.additionalMetadata) {
-          this.additionalMetadata.push(item);
-        }
-        this.updateChart();
-      });
+    this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
+      this.additionalMetadata = [];
+      this.sensorData = {sensor1: data};
+      this.seriesData = {sensor1: JSON.parse(data.data)};
+      for (const item of data.additionalMetadata) {
+        this.additionalMetadata.push(item);
+      }
+      this.updateChart();
+      this.updateFromInput = true;
+    });
   }
 
   updateChart(): void {
@@ -171,12 +216,6 @@ export class HomeComponent implements OnInit {
     this.updateFromInput = true;
   }
 
-  addEvent(data): void {
-    this.chartOptions.xAxis.plotBands[1] = {
-
-    };
-  }
-
   saveMetadata(data): void {
     const addMetadata: AdditionalMetadata = {
       title: data.metaTitle,
@@ -189,8 +228,28 @@ export class HomeComponent implements OnInit {
   }
 
   saveEvent(data): void {
-    this.sensorService.saveEvent(data).subscribe((response) => {
-      console.log(data);
+    this.sensorService.saveEvent(data.eventData).subscribe((response) => {
+      if (data.eventData.buildingId === this.selectedBuilding.id) {
+        const start = new Date(data.eventData.startDate);
+        let endtime: number;
+        if (data.eventData.endDate) {
+          const end = new Date(data.eventData.endDate);
+          endtime = end.getTime();
+        } else {
+          endtime = start.getTime();
+        }
+        this.events.push({
+          id: data.eventData.title,
+          color: 'rgba(255,0,0,0.5)',
+          from: start.getTime(),
+          to: endtime,
+          events: this.plotBandEvents,
+          description: data.eventData.description,
+          cluster: data.cluster,
+          that: this
+        });
+        this.updateFromInput = true;
+      }
     });
   }
 }
