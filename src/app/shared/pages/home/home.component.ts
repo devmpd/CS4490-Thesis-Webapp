@@ -8,6 +8,7 @@ import {AddSensorsComponent} from '../dialogs/add-sensors/add-sensors.component'
 import {AddEventComponent} from '../dialogs/add-event/add-event.component';
 import {AddMetadataComponent} from '../dialogs/add-metadata/add-metadata.component';
 import { AdditionalMetadata } from '../../model/additional-metadata';
+import {Event} from '../../model/event';
 
 StockModule(Highcharts);
 
@@ -113,7 +114,7 @@ export class HomeComponent implements OnInit {
       data => {
         dialogRef.close();
         if (data) {
-          this.addEvent(data);
+          this.saveEvent(data);
         }
       }
     );
@@ -151,7 +152,6 @@ export class HomeComponent implements OnInit {
         for (const item of data.additionalMetadata) {
           this.additionalMetadata.push(item);
         }
-        console.log(this.additionalMetadata);
         this.updateChart();
       });
   }
@@ -176,6 +176,7 @@ export class HomeComponent implements OnInit {
 
     };
   }
+
   saveMetadata(data): void {
     const addMetadata: AdditionalMetadata = {
       title: data.metaTitle,
@@ -184,6 +185,12 @@ export class HomeComponent implements OnInit {
     };
     this.sensorService.saveAdditionalMetadata(addMetadata).subscribe((response) => {
       this.additionalMetadata.push(addMetadata);
+    });
+  }
+
+  saveEvent(data): void {
+    this.sensorService.saveEvent(data).subscribe((response) => {
+      console.log(data);
     });
   }
 }

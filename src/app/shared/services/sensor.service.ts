@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AdditionalMetadata} from '../model/additional-metadata';
+import {Event} from '../model/event';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,11 @@ export class SensorService {
     return this.httpClient.post<AdditionalMetadata>(this.apiURL + 'sensors/sensor/addmetadata', data);
   }
 
-  public getClusters(): Observable<any> {
-    return this.httpClient.get(this.apiURL + 'buildings/clusters');
+  public getClusters(buildingID: string): Observable<any> {
+    return this.httpClient.get(this.apiURL + 'buildings/clusters/' + buildingID);
+  }
+
+  public saveEvent(data: Event): Observable<any> {
+    return this.httpClient.post<Event>(this.apiURL + 'events/add', data);
   }
 }

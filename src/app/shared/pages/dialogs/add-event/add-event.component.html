@@ -17,21 +17,26 @@
     <mat-label for="end">End Date (optional)</mat-label>
     <input id="end" matInput type="datetime-local" [(ngModel)]="endDate">
   </mat-form-field>
+  <div class="form-inputs">
+    <mat-checkbox color="primary" [(ngModel)]="isGlobal">Global Event</mat-checkbox>
+  </div>
   <div id="dropdowns">
     <mat-form-field>
       <mat-label>Building</mat-label>
-      <mat-select [(value)]="selectedBuilding">
+      <mat-select [(value)]="selectedBuilding" [disabled]="isGlobal" (selectionChange)="selectBuilding($event)">
         <mat-option *ngFor="let building of buildings" [value]="building">{{building.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Cluster (optional)</mat-label>
-      <mat-select [(value)]="selectedCluster">
+      <mat-select [(value)]="selectedCluster" [disabled]="isGlobal">
         <mat-option *ngFor="let cluster of clusters" [value]="cluster">{{cluster.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-
+  <div *ngIf="errorMessage">
+    <span class="error-message">{{errorMessage}}</span>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>

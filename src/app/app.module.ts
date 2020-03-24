@@ -22,6 +22,7 @@ import { AddEventComponent } from './shared/pages/dialogs/add-event/add-event.co
 import { AddMetadataComponent } from './shared/pages/dialogs/add-metadata/add-metadata.component';
 import {FormsModule} from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDialogModule,
     FormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],
