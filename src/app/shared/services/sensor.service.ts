@@ -34,4 +34,8 @@ export class SensorService {
   public saveEvent(data: Event): Observable<any> {
     return this.httpClient.post<Event>(this.apiURL + 'events/add', data);
   }
+
+  public getEvents(buildingId: string, sensorId: string): Observable<any> {
+    return this.httpClient.get(this.apiURL + 'events/get?buildingid=' + buildingId + '&sensorid=' + sensorId);
+  }
 }

@@ -66,9 +66,14 @@ export class AddEventComponent implements OnInit {
         clusterId: cluster
       };
 
+      let clusterName = null;
+      if (this.selectedCluster) {
+        clusterName = this.selectedCluster.name;
+      }
+
       const data = {
         eventData: event,
-        cluster: this.selectedCluster.name
+        cluster: clusterName
       };
 
       this.dialogRef.close(data);

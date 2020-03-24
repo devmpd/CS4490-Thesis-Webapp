@@ -184,6 +184,7 @@ export class HomeComponent implements OnInit {
       this.seriesData = null;
       this.sensorData = null;
       this.additionalMetadata = [];
+      this.events.length = 0;
       this.sensors = data;
     });
   }
@@ -191,10 +192,14 @@ export class HomeComponent implements OnInit {
   selectSensor($event) {
     this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
       this.additionalMetadata = [];
+      this.events.length = 0;
       this.sensorData = {sensor1: data};
       this.seriesData = {sensor1: JSON.parse(data.data)};
       for (const item of data.additionalMetadata) {
         this.additionalMetadata.push(item);
+      }
+      for (const item of data.events) {
+        this.addEvent(item);
       }
       this.updateChart();
       this.updateFromInput = true;
@@ -229,7 +234,7 @@ export class HomeComponent implements OnInit {
 
   saveEvent(data): void {
     this.sensorService.saveEvent(data.eventData).subscribe((response) => {
-      if (data.eventData.buildingId === this.selectedBuilding.id) {
+      if (data.eventData.buildingId === this.selectedBuilding.id || data.eventData.buildingId === 'GLOBAL') {
         const start = new Date(data.eventData.startDate);
         let endtime: number;
         if (data.eventData.endDate) {
@@ -251,5 +256,27 @@ export class HomeComponent implements OnInit {
         this.updateFromInput = true;
       }
     });
+  }
+
+  addEvent(data): void {
+    const start = new Date(data.startDate);
+    let endtime: number;
+    if (data.endDate) {
+      const end = new Date(data.endDate);
+      endtime = end.getTime();
+    } else {
+      endtime = start.getTime();
+    }
+    this.events.push({
+      id: data.title,
+      color: 'rgba(255,0,0,0.5)',
+      from: start.getTime(),
+      to: endtime,
+      events: this.plotBandEvents,
+      description: data.description,
+      cluster: data.cluster,
+      that: this
+    });
+    this.updateFromInput = true;
   }
 }
