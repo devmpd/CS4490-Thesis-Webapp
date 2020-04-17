@@ -200,6 +200,7 @@ export class HomeComponent implements OnInit {
     this.sensorService.getAllSensorData($event.value.id).subscribe((data) => {
       this.additionalMetadata = [];
       this.events.length = 0;
+      this.eventData = null;
       this.sensorData = {sensor1: data};
       this.seriesData = {sensor1: JSON.parse(data.data)};
       for (const item of data.additionalMetadata) {
@@ -253,8 +254,8 @@ export class HomeComponent implements OnInit {
         this.events.push({
           id: data.eventData.title,
           color: 'rgba(255,0,0,0.5)',
-          from: start.getTime(),
-          to: endtime,
+          from: start.getTime() - 14400000,
+          to: endtime - 14400000,
           events: this.plotBandEvents,
           description: data.eventData.description,
           cluster: data.cluster,
